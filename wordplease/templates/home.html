@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>WordPlease - Plataforma de blogging</title>
+</head>
+<body>
+    <h1>Bienvenido a WordPlease</h1>
+
+    {% for post in posts %}
+    <img src="{{ post.URL }}" alt="{{ post.title }}" title="{{ post.title }}" height="200">
+    {% endfor %}
+
+</body>
+</html>
