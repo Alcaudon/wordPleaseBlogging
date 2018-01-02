@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>404 not found</title>
-</head>
-<body>
-   <h1>404 página no encontrada</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{%  block head_title %}404 not found{%  endblock  %}
+{%  block content %}<h1>404 página no encontrada</h1>{%  endblock  %}

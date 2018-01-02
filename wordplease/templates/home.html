@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>WordPlease - Plataforma de blogging</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{%  block content %}
     <h1>Bienvenido a WordPlease</h1>
 
     {% for post in posts %}
@@ -12,6 +8,4 @@
         <img src="{{ post.URL }}" alt="{{ post.title }}" title="{{ post.title }}" height="200">
         </a>
     {% endfor %}
-
-</body>
-</html>
+{%  endblock  %}
