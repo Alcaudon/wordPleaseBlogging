@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wordplease.apps.WordpleaseConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
