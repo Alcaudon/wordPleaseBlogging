@@ -1,16 +1,21 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
+
 from wordplease.forms import PostForm
 from wordplease.models import Post
 
+@login_required
 def home(request):
     posts = Post.objects.all().order_by("-date")[:5]
     context = {'posts': posts}
     return render(request, "home.html", context)
 
+@login_required
 def post_detail(request, pk):
     possible_posts = Post.objects.filter(pk=pk).select_related('category')
     if len(possible_posts) == 0:
@@ -20,7 +25,8 @@ def post_detail(request, pk):
         context = {'post': post}
         return render(request, "post_detail.html", context)
 
-class CreatePostView(View):
+class CreatePostView(LoginRequiredMixin, View):
+
     def get(self, request):
         form = PostForm()
         return render(request, "post_form.html", {'form': form})
