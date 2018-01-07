@@ -21,7 +21,6 @@ def post_detail(request, pk):
         return render(request, "post_detail.html", context)
 
 class CreatePostView(View):
-
     def get(self, request):
         form = PostForm()
         return render(request, "post_form.html", {'form': form})
