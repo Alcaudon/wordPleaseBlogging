@@ -32,7 +32,9 @@ class CreatePostView(LoginRequiredMixin, View):
         return render(request, "post_form.html", {'form': form})
 
     def post (self, request):
-        form = PostForm(request.POST)
+        post = Post()
+        post.user = request.user
+        form = PostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save()
             form = PostForm()
