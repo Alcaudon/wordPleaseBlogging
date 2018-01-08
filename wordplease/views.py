@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
-
+from django.views.generic import ListView
 
 from wordplease.forms import PostForm
 from wordplease.models import Post
@@ -25,6 +25,7 @@ def post_detail(request, pk):
         context = {'post': post}
         return render(request, "post_detail.html", context)
 
+
 class CreatePostView(LoginRequiredMixin, View):
 
     def get(self, request):
@@ -44,3 +45,12 @@ class CreatePostView(LoginRequiredMixin, View):
             messages.success(request, message)
         return render(request, "post_form.html", {'form': form})
 
+
+class MyPostView(LoginRequiredMixin, ListView):
+
+    model = Post
+    template_name = "my_posts.html"
+
+    def get_queryset(self):
+        queryset = super(MyPostView, self).get_queryset()
+        return queryset.filter(user=self.request.user)

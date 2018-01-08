@@ -1,0 +1,5 @@
+{% for post in posts %}
+    <a href="{% url 'post_detail_name' post.pk %}" title="{{ post.title }}">
+        <img src="{{ post.URL }}" alt="{{ post.title }}" title="{{ post.title }}" height="200">
+    </a>
+{% endfor %}
