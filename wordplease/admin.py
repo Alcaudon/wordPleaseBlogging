@@ -3,6 +3,9 @@ from django.utils.safestring import mark_safe
 
 from wordplease.models import Category, Post
 
+admin.site.site_header = "WORDPLEASE"
+admin.site.site_title = admin.site.site_header
+
 admin.site.register(Category)
 
 @admin.register(Post)
