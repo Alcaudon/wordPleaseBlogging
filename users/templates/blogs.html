@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{%  block head_title %}BLogs{%  endblock  %}
+{%  block content %}
+    <h1>BLOGS</h1>
+
+    {% for blog in blogs %}
+          <div class="col-lg-6">
+                <li>
+                    <a class="nav-link" href="{% url 'my_posts_page' %}">{{ blog.first_name }} {{ blog.last_name }}</a>
+                </li>
+          </div>
+      {% endfor %}
+
+{%  endblock  %}

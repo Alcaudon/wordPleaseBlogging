@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -30,3 +31,9 @@ class LogoutView (View):
     def get (self, request):
         django_logout(request)
         return redirect("login_page")
+
+class Blogs (View):
+    def get (self, request):
+        blogs = User.objects.all()
+        context = {'blogs': blogs}
+        return render(request, "blogs.html", context)
