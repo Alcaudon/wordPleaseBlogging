@@ -10,7 +10,7 @@ from django.views.generic import ListView
 from wordplease.forms import PostForm
 from wordplease.models import Post
 
-@login_required
+
 def home(request):
     today = datetime.datetime.today()
     posts = Post.objects.all().filter(date__lt=today).order_by("-date")[:10]

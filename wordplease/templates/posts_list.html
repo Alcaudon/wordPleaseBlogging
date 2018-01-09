@@ -1,5 +1,14 @@
-{% for post in posts %}
-    <a href="{% url 'post_detail_name' post.pk %}" title="{{ post.title }}">
-        <img src="{{ post.URL }}" alt="{{ post.title }}" title="{{ post.title }}" height="200">
-    </a>
-{% endfor %}
+<div class="container">
+  <div class="row">
+      {% for post in posts %}
+          <div class="col-sm">
+               <a href="{% url 'post_detail_name' post.pk %}" title="{{ post.title }}">
+                   <h4>{{ post.title }}</h4>
+                   <img src="{{ post.URL }}" alt="{{ post.title }}" title="{{ post.title }}" height="200">
+                   <p>{{ post.introduction }}</p>
+               </a>
+          </div>
+      {% endfor %}
+
+  </div>
+</div>
