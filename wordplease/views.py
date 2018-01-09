@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,7 +12,8 @@ from wordplease.models import Post
 
 @login_required
 def home(request):
-    posts = Post.objects.all().order_by("-date")[:5]
+    today = datetime.datetime.today()
+    posts = Post.objects.all().filter(date__lt=today).order_by("-date")[:10]
     context = {'posts': posts}
     return render(request, "home.html", context)
 
