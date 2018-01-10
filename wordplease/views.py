@@ -1,8 +1,9 @@
-import datetime
+from django.contrib.auth.models import User
+from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
@@ -12,7 +13,7 @@ from wordplease.models import Post
 
 
 def home(request):
-    today = datetime.datetime.today()
+    today = timezone.now()
     posts = Post.objects.all().filter(date__lt=today).order_by("-date")[:10]
     context = {'posts': posts}
     return render(request, "home.html", context)
@@ -49,10 +50,30 @@ class CreatePostView(LoginRequiredMixin, View):
 
 
 class MyPostView(LoginRequiredMixin, ListView):
-
     model = Post
     template_name = "my_posts.html"
 
     def get_queryset(self):
         queryset = super(MyPostView, self).get_queryset()
         return queryset.filter(user=self.request.user)
+
+class PostsByUserName(ListView):
+
+    model = Post
+    template_name = 'posts_by_user.html'
+
+    def get_queryset(self):
+        queryset = super(PostsByUserName, self).get_queryset()
+        author_name = self.kwargs.get('username')
+        return queryset.filter(user__username=author_name)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        username = self.kwargs.get('username')
+        user = get_object_or_404(User, username=username)
+        context['blog'] = user
+        return context
+
+
+
+

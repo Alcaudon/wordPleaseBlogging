@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{%  block head_title %}Posts by {{ blog.first_name }} {{ blog.last_name }}{%  endblock  %}
+{%  block content %}
+    Posts by {{ blog.first_name }} {{ blog.last_name }}
+    {% include "posts_list.html" with posts=object_list %}
+
+{%  endblock  %}
+

@@ -1,13 +1,13 @@
 from django.contrib import admin
 from django.urls import path
-from wordplease.views import home, post_detail, CreatePostView, MyPostView
+from wordplease.views import home, post_detail, CreatePostView, MyPostView, PostsByUserName
 from users.views import LoginView, LogoutView, Blogs
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', MyPostView.as_view(), name="my_posts_page"),
-    path('blogs/<str:user_name>/', PostsUserView.as_view(), name='posts_by_user'),
+    path('blogs/<str:username>/', PostsByUserName.as_view(), name='posts_by_name'),
 
     path('login', LoginView.as_view(), name='login_page'),
     path('logout', LogoutView.as_view(), name='logout_page'),
