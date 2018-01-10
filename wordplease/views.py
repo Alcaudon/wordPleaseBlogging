@@ -1,12 +1,11 @@
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from wordplease.forms import PostForm
 from wordplease.models import Post
@@ -18,9 +17,9 @@ def home(request):
     context = {'posts': posts}
     return render(request, "home.html", context)
 
-@login_required
-def post_detail(request, pk):
-    possible_posts = Post.objects.filter(pk=pk).select_related('category')
+
+def post_detail(request, username, pk):
+    possible_posts = Post.objects.filter(user__username=username, pk=pk).select_related('category')
     if len(possible_posts) == 0:
         return render(request, "404.html", status=404)
     else:
@@ -64,8 +63,8 @@ class PostsByUserName(ListView):
 
     def get_queryset(self):
         queryset = super(PostsByUserName, self).get_queryset()
-        author_name = self.kwargs.get('username')
-        return queryset.filter(user__username=author_name, date__lte=timezone.now()).order_by('-date')
+        username = self.kwargs.get('username')
+        return queryset.filter(user__username=username, date__lte=timezone.now()).order_by('-date')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -73,7 +72,5 @@ class PostsByUserName(ListView):
         user = get_object_or_404(User, username=username)
         context['blog'] = user
         return context
-
-
 
 
