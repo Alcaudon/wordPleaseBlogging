@@ -65,7 +65,7 @@ class PostsByUserName(ListView):
     def get_queryset(self):
         queryset = super(PostsByUserName, self).get_queryset()
         author_name = self.kwargs.get('username')
-        return queryset.filter(user__username=author_name)
+        return queryset.filter(user__username=author_name, date__lte=timezone.now()).order_by('-date')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
