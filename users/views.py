@@ -1,10 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.models import User
+from django.contrib.auth.views import login
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.generic import FormView
 
-from users.forms import LoginForm
+from users.forms import LoginForm, SignUpForm
 
 
 class LoginView (View):
@@ -37,3 +40,22 @@ class Blogs (View):
         blogs = User.objects.all()
         context = {'blogs': blogs}
         return render(request, "blogs.html", context)
+
+
+class SignUpView(FormView):
+
+    form_class = SignUpForm
+    template_name = 'signup.html'
+
+    def form_valid(self, form):
+        form.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return redirect('home_page')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('home_page')
+        return super().dispatch(request, *args, **kwargs)

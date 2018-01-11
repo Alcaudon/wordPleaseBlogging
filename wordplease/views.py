@@ -41,7 +41,7 @@ class CreatePostView(LoginRequiredMixin, View):
         if form.is_valid():
             post = form.save()
             form = PostForm()
-            url = reverse("post_detail_name", args=[post.pk])
+            url = reverse("post_detail_name", args=[post.user.username, post.pk])
             message = "Post created successfully! "
             message += '<a href="{0}">View</a>'.format(url)
             messages.success(request, message)
@@ -54,7 +54,7 @@ class MyPostView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super(MyPostView, self).get_queryset()
-        return queryset.filter(user=self.request.user)
+        return queryset.filter(user=self.request.user, date__lte=timezone.now()).order_by('-date')
 
 class PostsByUserName(ListView):
 

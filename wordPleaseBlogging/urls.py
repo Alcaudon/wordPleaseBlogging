@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from wordplease.views import home, post_detail, CreatePostView, MyPostView, PostsByUserName
-from users.views import LoginView, LogoutView, Blogs
+from users.views import LoginView, LogoutView, Blogs, SignUpView
 
 
 urlpatterns = [
@@ -16,7 +16,8 @@ urlpatterns = [
 
     path('login', LoginView.as_view(), name='login_page'),
     path('logout', LogoutView.as_view(), name='logout_page'),
+    path('signup/', SignUpView.as_view(), name='signup'),
 
-    path('post/crear', CreatePostView.as_view(), name="create_post_page"),
+    path('new-post/', CreatePostView.as_view(), name="create_post_page"),
 
 ]
