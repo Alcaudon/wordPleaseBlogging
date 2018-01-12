@@ -3,30 +3,35 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 
-class UserSerializer(serializers.Serializer):
-
+class UserListSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+
+
+class UserSerializer(UserListSerializer):
+
     username = serializers.CharField()
     email = serializers.EmailField()
     password = serializers.CharField()
 
     def validate_username(self, data):
-        if User.objects.filter(username=data).exists():
-            raise ValidationError("El usuario ya existe")
+        if self.instance is None and User.objects.filter(username=data).exists():
+            raise ValidationError("Use already exists")
+        if self.instance and self.instance.username != data and User.objects.filter(username=data).exists():
+            raise ValidationError("Wanted username is already in use")
         return data
 
     def create(self, validated_data):
         instance = User()
-        instance.first_name=validated_data.get("first_name")
+        return self.update(instance,validated_data)
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get("first_name")
         instance.last_name = validated_data.get("last_name")
         instance.username = validated_data.get("username")
         instance.email = validated_data.get("email")
         instance.set_password(validated_data.get("password"))
         instance.save()
         return instance
-
-    def update(self, instance, validated_data):
-        pass
 
