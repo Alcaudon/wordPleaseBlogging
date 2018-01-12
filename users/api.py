@@ -1,11 +1,12 @@
+from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from users.serializers import UserSerializer
 
-class HelloWorld (APIView):
 
+class UserListAPI(APIView):
     def get(self, request):
-        return Response({'hello': 'world'})
-
-    def post(self, request):
-        return Response(request.data)
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
