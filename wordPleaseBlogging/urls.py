@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 
 from users.api import UserListAPI, UserDetailAPI
+from wordplease.api import PostListAPI
 from wordplease.views import home, post_detail, CreatePostView, MyPostView, PostsByUserName
 from users.views import LoginView, LogoutView, Blogs, SignUpView
 
@@ -25,6 +26,8 @@ urlpatterns = [
     # API REST
 
     path('api/1.0/users/<int:pk>', UserDetailAPI.as_view(), name="api_user_detail"),
-    path('api/1.0/users/', UserListAPI.as_view(), name="api_user_list")
+    path('api/1.0/users/', UserListAPI.as_view(), name="api_user_list"),
+
+    path('api/1.0/posts/', PostListAPI.as_view(), name="api_post_list")
 
 ]
