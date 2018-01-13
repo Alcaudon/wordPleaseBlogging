@@ -2,6 +2,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from wordplease.models import Post
+from wordplease.permissions import PostPermissions
 from wordplease.serializers import PostSerializer, PostsListSerializer
 
 
@@ -21,6 +22,7 @@ class PostDetailAPI(RetrieveUpdateDestroyAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [PostPermissions]
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
