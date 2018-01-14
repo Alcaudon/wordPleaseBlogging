@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {%  block head_title %}My posts{%  endblock  %}
+{%  block head %}My posts{%  endblock  %}
+{%  block head_text %}{%  endblock  %}
 {%  block content %}
-    <h1>My posts</h1>
 
     {% include "posts_list.html" with posts=object_list %}
 

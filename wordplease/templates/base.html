@@ -38,14 +38,14 @@
             </ul>
         </div>
     </nav>
-
-    <div class="jumbotron">
-        <div class="container">
-           <h1 class="display-3">{%  block head %}Bienvenido a WordPlease{%  endblock  %}</h1>
-          {%  block head_text %}<p>Tu blog de actualidad donde te enteraras de lo último que ha pasado en el mundo.</p>{%  endblock  %}
+    {%  block main-head %}
+        <div class="jumbotron">
+            <div class="container">
+               <h1 class="display-3">{%  block head %}Bienvenido a WordPlease{%  endblock  %}</h1>
+              {%  block head_text %}<p>Tu blog de actualidad donde te enteraras de lo último que ha pasado en el mundo.</p>{%  endblock  %}
+            </div>
         </div>
-    </div>
-
+    {%  endblock  %}
     {%  block content %}WordPlease - Plataforma de blogging{%  endblock  %}
 
     <footer class="text-muted">

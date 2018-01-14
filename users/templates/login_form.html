@@ -3,7 +3,6 @@
 {% block head_title %} Login {% endblock %}
 
 {%  block content %}
-    <h1>Login</h1>
 
     {% if messages %}
         {%  for message in messages %}
@@ -12,12 +11,14 @@
     {% endif %}
 
     <form method="post" novalidate>
+        <h2 class="form-signin-heading">Please sign in</h2>
         {% csrf_token %}
         {{ form.as_p }}
         <div>
-            <button type="submit">Login</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </div>
 
     </form>
 
 {%  endblock  %}
+
