@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 
-from users.api import UserListAPI, UserDetailAPI
-from wordplease.api import PostListAPI, PostDetailAPI
+from users.api import UserListAPI, UserDetailAPI, BlogsListAPI
+from wordplease.api import PostListAPI, PostDetailAPI, PostListAPIUser
 from wordplease.views import home, post_detail, CreatePostView, MyPostView, PostsByUserName
 from users.views import LoginView, LogoutView, Blogs, SignUpView
 
@@ -28,7 +28,10 @@ urlpatterns = [
     path('api/1.0/users/<int:pk>', UserDetailAPI.as_view(), name="api_user_detail"),
     path('api/1.0/users/', UserListAPI.as_view(), name="api_user_list"),
 
-    path('api/1.0/posts/<int:pk>', PostDetailAPI.as_view(), name="api_movie_detail"),
-    path('api/1.0/posts/', PostListAPI.as_view(), name="api_post_list")
+    path('api/1.0/posts/<int:pk>', PostDetailAPI.as_view(), name='api_post_detail'),
+    path('api/1.0/posts/<str:user_name>/', PostListAPIUser.as_view(), name='api_user_posts_list'),
+    path('api/1.0/posts/', PostListAPI.as_view(), name="api_post_list"),
+
+    path('api/1.0/blogs/', BlogsListAPI.as_view(), name='api_blogs_list'),
 
 ]

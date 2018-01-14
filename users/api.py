@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from rest_framework import status
-from rest_framework.generics import get_object_or_404
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.permissions import UsersPermission
-from users.serializers import UserSerializer, UserListSerializer
+from users.serializers import UserSerializer, UserListSerializer, BlogSerializer
 
 
 class UserListAPI(APIView):
@@ -52,3 +53,15 @@ class UserDetailAPI(APIView):
         self.check_object_permissions(request, user)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class BlogsListAPI(ListAPIView):
+
+    serializer_class = BlogSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['username']
+    ordering_fields = ['username']
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+
+        return queryset

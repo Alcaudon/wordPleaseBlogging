@@ -35,3 +35,15 @@ class UserSerializer(UserListSerializer):
         instance.save()
         return instance
 
+
+
+class BlogSerializer(serializers.ModelSerializer):
+
+    user_url = serializers.SerializerMethodField('is_user_URL')
+
+    def is_user_URL(self, obj):
+        return "http://127.0.0.1:8000/api/1.0/posts/" + obj.username
+    class Meta:
+        model = User
+
+        fields = ["username", "first_name", "last_name", "user_url"]
