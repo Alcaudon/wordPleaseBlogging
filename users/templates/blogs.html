@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
-{%  block head_title %}BLogs{%  endblock  %}
-{%  block content %}
-    <h1>BLOGS</h1>
+{%  block head_title %}Blogs{%  endblock  %}
 
+{%  block head %}Blogs{%  endblock  %}
+{%  block head_text %}Listado de los blogs dados de alta en la plataforma{%  endblock  %}
+
+{%  block content %}
     {% for blog in blogs %}
-          <div class="col-lg-6">
-                <li>
+          <ul class="list-group">
+                <li class="list-group-item">
                     <a class="nav-link" href="{% url 'posts_by_name' username=blog.username %}">{{ blog.first_name }} {{ blog.last_name }}</a>
                 </li>
-          </div>
+          </ul>
       {% endfor %}
 
 {%  endblock  %}
