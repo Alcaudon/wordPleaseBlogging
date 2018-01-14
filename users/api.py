@@ -38,7 +38,7 @@ class UserDetailAPI(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
-    def put(self,request, pk):
+    def put(self, request, pk):
         user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
         serializer = UserSerializer(user, data=request.data)
